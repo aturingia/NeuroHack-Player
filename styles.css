@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  min-height: 100%;
+  /*outline: solid 1px rgb(49, 49, 49);*/
+}
+
+html{
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  padding: 25px;
+  background-color: white;
+  color: black;
+  min-height: 100%;
+}
+h3 {
+  font-size: 25px;
+}
+.titulo-logo {
+  font-size: 37px;
+  color: solid black;
+  font-weight: bold;
+}
+
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+.loop-player {
+  margin-bottom: 20px;
+  font-size: 16px;
+  width: 361px;
+}
+
+.noise {
+    text-align: center;
+}
+
+.noise-gn {
+  margin-top: 83px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  width: 361px;
+}
+
+.youtube {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.insert-Area {
+  background-color: #fff;
+  border: 1px solid #444444;
+  width: 300px;
+  height: 25px;
+  text-align: left;
+  padding: 5px;
+}
+.bineural {
+  text-align:center;
+}
+.bn {
+  width: 100px;
+}
+
+.bineural-bn {
+  margin-top: 28.5px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  width: 361px;
+}
+
+.volume-bn {
+  width: 361px;
+}
+
+.link-a {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+
+input {
+    width: 80%;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+input::file-selector-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+iframe {
+  width: 370px;
+  height: 208px; 
+}
+
+#player {
+    margin-top: 20px;
+}
+
+/* FLEX */
+
+.grid-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.youtube {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.reproductores {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-pl {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  
+}
+
+.noise {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-ns {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+   
+}
+
+.nav-bn {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.bineural {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bineural-bn {
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.frecuencias{
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
+}
+.footer {
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* GRID */
+.header {
+  grid-area: header;
+}
+
+.youtube {
+  grid-area: youtube;
+}
+
+.player {
+  grid-area: player;
+}
+
+.noise {
+  grid-area: noise;
+}
+
+.bineural {
+  grid-area: bineural;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+.grid-container {
+  display: grid;
+  gap: 10px;
+  grid-template:
+    "header" 
+    "youtube" 
+    "player" 
+    "noise" 
+    "bineural"
+    "footer"  /
+     390px;
+}
+
+/* RESPONSIVE */
+
+@media(min-width: 768px) {
+  .grid-container{
+    gap: 10px;
+    grid-template:
+      "header header" 
+      "youtube youtube" 
+      "player player" 
+      "noise bineural" 
+      "footer footer" /
+       50% 50% ;
+  }
+  iframe {
+  width: 560px;
+  height: 315px; 
+}
+  
+  .reproductores{
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  
+}
+
+@media(min-width: 1200px) {
+  .grid-container{
+    gap: 10px;
+    grid-template:
+      "header header" 
+      "youtube youtube" 
+      "player player" 
+      "noise bineural" 
+      "footer footer" /
+       50% 50% ;
+  }
+  iframe {
+  width: 560px;
+  height: 315px; 
+}
+  
+  .reproductores{
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
