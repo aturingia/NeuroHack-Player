@@ -29,51 +29,72 @@
     </div>
   
     <div class="player">
+      
+        <h3>Loop Player</h3><br>
+        <div class="reproductores">
+          <div class="player-1"> 
+            
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br>
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100">
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>
+            </div>      
     
-      <h3>Loop Player</h3><br>
-      <div class="reproductores">
-        <div class="loop-player">
-          <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
-          <label>Volume:</label>
-          <span class="volumeLevel">100%</span><br>
-          <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100">
-          <div class="nav-pl">
-            <button class="startButton">Start</button>
-            <button class="stopButton">Stop</button>
-            <audio class="audioPlayer" loop></audio>
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br>     
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>          
+            </div>
+            
           </div>
-        </div>
+        
+        
+          <div class="playe-2">
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br>     
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>
+            </div>
     
-        <div class="loop-player">
-          <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
-          <label>Volume:</label>
-          <span class="volumeLevel">100%</span><br>     
-          <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
-          <div class="nav-pl">
-            <button class="startButton">Start</button>
-            <button class="stopButton">Stop</button>
-            <audio class="audioPlayer" loop></audio>
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br> 
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>
+            </div>
+          
           </div>
+        
         </div>
-    
-        <div class="loop-player">
-          <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
-          <label>Volume:</label>
-          <span class="volumeLevel">100%</span><br> 
-          <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
-          <div class="nav-pl">
-            <button class="startButton">Start</button>
-            <button class="stopButton">Stop</button>
-            <audio class="audioPlayer" loop></audio>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="noise">
       <h3>Noise Generator</h3>
       <div class="noise-gn">
-        <label for="volume">Volume: <span id="volumeValue">50%</span></label>
+        <label for="volume">Volume: <span id="volumeValue">2%</span></label>
         <input type="range" id="volume" min="0" max="10" step="0.01" value="5">
         <div class="nav-ns">
           <button id="whiteNoiseBtn">White Noise</button>
