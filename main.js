@@ -256,12 +256,25 @@
                         setTimeout(startAllAudio, 100);
                     }
                 });
+                
+                // Añadir soporte táctil para dispositivos móviles
+                option.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    this.click();
+                });
             });
             
-            // Inicializar audio
+            // Inicializar audio con compatibilidad para navegadores antiguos
             function initAudio() {
                 if (!audioContext) {
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    // Compatibilidad con navegadores antiguos
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioContext) {
+                        alert('Tu navegador no soporta la API de Audio Web. Por favor, actualiza a un navegador más moderno.');
+                        return;
+                    }
+                    
+                    audioContext = new AudioContext();
                     
                     // Crear nodo de ganancia maestro
                     masterGain = audioContext.createGain();
@@ -824,6 +837,11 @@
                         }
                     }
                 });
+                
+                // Añadir soporte táctil para dispositivos móviles
+                slider.addEventListener('touchstart', function(e) {
+                    // Permitir que el evento continúe
+                });
             });
             
             // Event listeners para toggles
@@ -834,6 +852,14 @@
             // Event listeners para botones
             startAllBtn.addEventListener('click', startAllAudio);
             stopAllBtn.addEventListener('click', stopAllAudio);
+            
+            // Añadir soporte táctil para botones en dispositivos móviles
+            [startAllBtn, stopAllBtn].forEach(btn => {
+                btn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    this.click();
+                });
+            });
             
             // Event listeners para reproductores de audio
             audioFile1.addEventListener('change', function(e) {
@@ -892,6 +918,14 @@
                 stopAudio(audioPlayers.player2, 2);
             });
             
+            // Añadir soporte táctil para controles de audio
+            [playAudio1, pauseAudio1, stopAudio1, playAudio2, pauseAudio2, stopAudio2].forEach(btn => {
+                btn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    this.click();
+                });
+            });
+            
             // Inicializar
             initCanvas();
             updateDisplayValues();
@@ -899,13 +933,30 @@
             
             // Redimensionar canvas cuando cambie el tamaño de la ventana
             window.addEventListener('resize', initCanvas);
+            
+            // Manejar la suspensión/activación de la página en dispositivos móviles
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && isPlaying) {
+                    // Pausar audio cuando la pestaña no está visible
+                    stopAllAudio();
+                }
+            });
         });
-//================ Youtube-Player =================
-
-function loadPlaylist() {
-    var playlistURL = document.getElementById('playlistURL').value;
-    var playlistID = playlistURL.split('list=')[1];
-
-    var playerDiv = document.getElementById('player');
-    playerDiv.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1&loop=0&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
-};
+        
+        //================ Youtube-Player =================
+        function loadPlaylist() {
+            var playlistURL = document.getElementById('playlistURL').value;
+            if (!playlistURL) {
+                alert('Por favor, introduce una URL de lista de reproducción de YouTube');
+                return;
+            }
+            
+            var playlistID = playlistURL.split('list=')[1];
+            if (!playlistID) {
+                alert('URL de lista de reproducción no válida');
+                return;
+            }
+            
+            var playerDiv = document.getElementById('player');
+            playerDiv.innerHTML = '<iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1&loop=0&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+        }

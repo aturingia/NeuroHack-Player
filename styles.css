@@ -15,13 +15,14 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent; /* Elimina el resaltado azul en móviles */
         }
         
         body {
             background: linear-gradient(135deg, var(--dark), #16213e);
             color: var(--light);
             min-height: 100vh;
-            padding: 2rem;
+            padding: 1rem; /* Reducido para móviles */
         }
         
         .container {
@@ -35,7 +36,7 @@
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem); /* Tamaño responsivo */
             margin-bottom: 0.5rem;
             background: linear-gradient(to right, var(--accent), var(--secondary));
             -webkit-background-clip: text;
@@ -44,7 +45,7 @@
         }
         
         .subtitle {
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 3vw, 1.1rem); /* Tamaño responsivo */
             opacity: 0.8;
             margin-bottom: 1.5rem;
         }
@@ -55,47 +56,148 @@
             gap: 2rem;
             margin-bottom: 2rem;
         }
-.youtube {
-             max-width: 600px;
-             margin: 50px auto;
-             text-align: center;
+        
+        .youtube {
+            max-width: 600px;
+            margin: 30px auto; /* Reducido para móviles */
+            text-align: center;
         }
 
         .insert-Area {
-             background-color: #fff;
-             border: 1px solid #444444;
-             width: 300px;
-             height: 25px;
-             text-align: left;
-             padding: 5px;
+            background-color: #fff;
+            border: 1px solid #444444;
+            width: 100%; /* Ancho completo en móviles */
+            max-width: 300px; /* Máximo ancho */
+            height: 40px; /* Mayor para tocar fácilmente */
+            text-align: left;
+            padding: 10px; /* Más padding para tocar */
+            border-radius: 5px;
+            font-size: 16px; /* Evita zoom en iOS */
         }
 
         .iconYT {
-          color: var(--danger);
-       }
+            color: var(--danger);
+        }
+        
         .botonYT {
-          background-color: var(--danger);
-          color: var(--light);
-          margin-bottom: 1rem;
-}
-
-.YTitle {
-  color: var(--light)
-}
-
- /*Flex*/
-        .youtube {
-             display: flex;
-             flex-direction: column;
-             justify-content: center;
-             align-items: center;
+            background-color: var(--danger);
+            color: var(--light);
+            margin: 1rem;
+            padding: 12px 20px; /* Más grande para tocar */
+            border: none;
+            border-radius: 5px;
+            font-size: 16px; /* Evita zoom en iOS */
+            cursor: pointer;
+            width: 100%; /* Ancho completo en móviles */
+            max-width: 300px; /* Máximo ancho */
         }
 
+        .YTitle {
+            color: var(--light);
+            margin-bottom: 15px;
+        }
 
+        /*Flex*/
+        .youtube {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Mejoras para dispositivos táctiles */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 12px; /* Más grueso para tocar */
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
         
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px; /* Más grande para tocar */
+            height: 24px; /* Más grande para tocar */
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 198, 251, 0.5);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 24px; /* Más grande para tocar */
+            height: 24px; /* Más grande para tocar */
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 198, 251, 0.5);
+        }
+        
+        button {
+            min-height: 44px; /* Tamaño mínimo para tocar */
+            padding: 12px 20px; /* Más padding para tocar */
+            touch-action: manipulation; /* Mejora la respuesta táctil */
+        }
+        
+        .pattern-option {
+            min-height: 60px; /* Más alto para tocar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+        }
+        
+        .file-input {
+            padding: 12px; /* Más padding para tocar */
+            font-size: 16px; /* Evita zoom en iOS */
+        }
+        
+        /* Responsividad mejorada */
         @media (max-width: 1100px) {
             .main-content {
                 grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+            
+            .audio-players {
+                grid-template-columns: 1fr;
+            }
+            
+            .panel {
+                padding: 1rem;
+            }
+            
+            .pattern-selector {
+                grid-template-columns: 1fr; /* Una columna en móviles */
+                gap: 0.5rem;
+            }
+            
+            .noise-controls {
+                grid-template-columns: 1fr; /* Una columna en móviles */
+            }
+            
+            .buttons {
+                flex-direction: column; /* Botones en columna en móviles */
+            }
+            
+            .youtube iframe {
+                width: 100%; /* Iframe responsivo */
+                height: auto;
+                aspect-ratio: 16/9; /* Mantener relación de aspecto */
             }
         }
         
@@ -104,12 +206,6 @@
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
             margin-bottom: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .audio-players {
-                grid-template-columns: 1fr;
-            }
         }
         
         .panel {
@@ -122,7 +218,7 @@
         }
         
         h2 {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem); /* Tamaño responsivo */
             margin-bottom: 1.5rem;
             color: var(--accent);
             display: flex;
@@ -131,7 +227,7 @@
         }
         
         h3 {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem); /* Tamaño responsivo */
             margin: 1.5rem 0 1rem;
             color: var(--warning);
             padding-bottom: 0.5rem;
@@ -154,25 +250,6 @@
             gap: 1rem;
         }
         
-        input[type="range"] {
-            flex: 1;
-            height: 8px;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            outline: none;
-            -webkit-appearance: none;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--accent);
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 198, 251, 0.5);
-        }
-        
         .value-display {
             min-width: 60px;
             text-align: center;
@@ -187,19 +264,6 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 0.8rem;
             margin-bottom: 1.5rem;
-        }
-        
-        .pattern-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
         }
         
         .pattern-option:hover {
@@ -277,20 +341,6 @@
             display: flex;
             gap: 1rem;
             margin-top: 1.5rem;
-        }
-        
-        button {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
         }
         
         .btn-primary {
