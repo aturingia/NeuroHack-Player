@@ -264,7 +264,7 @@ iframe {
 
 /* RESPONSIVE */
 
-@media(min-width: 720px) {
+@media(min-width: 768px) {
   .grid-container{
     gap: 10px;
     grid-template:
