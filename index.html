@@ -1,392 +1,141 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Neuro Hack Player</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="shorcut icon" size="16x16 24x24 32x32 48x48" href="favicon.ico" type="image/x-icon">
-  <title>Neuro Hack Player</title>
 </head>
-
 <body>
-  <div class="container">
-    <header class="header">
-      <div class="header-logo">
-        <img src="https://github.com/aturingia/img-src/blob/main/brain%20logo_5232804%20(1).png?raw=true" width="60"
-        height="60" alt="logo">
-        <h1>Neuro Hack Player</h1>
-        <h3>Generador Avanzado de Tonos con Audio Rápido</h3>
-        <p class="subtitle">Carga y reproducción optimizada de archivos MP3/WAV y reproductor de youtube</p>
-      </div>
-    </header>
-
+  
+  <div class="grid-container">
+    
+    <div class="header">
+      <img src="https://github.com/aturingia/img-src/blob/main/brain%20logo_5232804%20(1).png?raw=true" width="90" height="90" alt="logo">
+      <p class="titulo-logo">Neuro Hack Player</p><br>
+      <button onclick="myFunction()">Dark mode</button>
+    </div>
+  
     <div class="youtube">
-      <div class="youtube-player">       
-        <h2 class="YTitle"><span class="iconYT">▶</span>Youtube Player</h2>
-        <input type="text" id="playlistURL" class="insert-Area" placeholder="Insert YouTube Playlist URL">
-        <button class="botonYT" onclick="loadPlaylist()">Load Playlist</button>
-        <div id="player"></div>
-      </div>
+      <h3>Youtube Player</h3>
+      <input type="text" id="playlistURL" class="insert-Area" placeholder="Insert YouTube Playlist URL"><br>
+      <button onclick="loadPlaylist()">Load Playlist</button>
+      <div id="player"></div>
+      <audio id="audio" preload="auto" loop>
+        <source src="silence.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  
+    <div class="player">
+      
+        <h3>Loop Player</h3><br>
+        <div class="reproductores">
+          <div class="player-1"> 
+            
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br>
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100">
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>
+            </div>      
+    
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br>     
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>          
+            </div>
+            
+          </div>
+        
+        
+          <div class="playe-2">
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br>     
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>
+            </div>
+    
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br> 
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>
+            </div>
+          
+          </div>
+        
+        </div>
     </div>
 
-    <div class="audio-players">
-      <div class="panel">
-        <h2><span class="icon">🎵</span> Reproductor de Audio 1</h2>
-
-        <div class="audio-player-html5" id="audio-player-1">
-          <div class="file-input-container">
-            <input type="file" id="audio-file-1" class="file-input" accept="audio/*" style="color: transparent">
-          </div>
-
-          <div class="audio-info-html5">
-            <div class="audio-title" id="audio-title-1">Selecciona un archivo de audio</div>
-            <div class="audio-duration" id="audio-duration-1">-</div>
-          </div>
-
-          <!-- Elemento de audio oculto -->
-          <audio id="html5-audio-1" loop>
-            Tu navegador no soporta el elemento de audio.
-          </audio>
-
-          <!-- Barra de progreso personalizada -->
-          <div class="progress-container">
-            <div class="progress-bar" id="progress-bar-1">
-              <div class="progress-fill" id="progress-fill-1"></div>
-            </div>
-            <div class="progress-time">
-              <span id="current-time-1">0:00</span>
-              <span id="total-time-1">0:00</span>
-            </div>
-          </div>
-
-          <div class="control-group">
-            <label for="audio-volume-1">Volumen Audio 1</label>
-            <div class="slider-container">
-              <input type="range" id="audio-volume-1" min="0" max="100" value="80">
-              <div class="value-display" id="audio-volume-1-value">80%</div>
-            </div>
-          </div>
-
-          <div class="audio-controls-html5">
-            <button id="play-audio-1" class="btn-play" disabled>
-              <span class="icon">▶️</span> Reproducir
-            </button>
-            <button id="pause-audio-1" class="btn-pause" disabled>
-              <span class="icon">⏸️</span> Pausar
-            </button>
-            <button id="stop-audio-1" class="btn-stop" disabled>
-              <span class="icon">⏹️</span> Parar
-            </button>
-          </div>
-        </div>
-
-        <div class="optimization-tips">
-          <h4>💡 Consejos para carga rápida:</h4>
-          <ul>
-            <li>Archivos WAV se cargan más rápido que MP3</li>
-            <li>Archivos pequeños (&lt;10MB) cargan instantáneamente</li>
-            <li>Evita archivos muy largos (&gt;30 minutos)</li>
-          </ul>
+    <div class="noise">
+      <h3>Noise Generator</h3>
+      <div class="noise-gn">
+        <label for="volume">Volume: <span id="volumeValue">2%</span></label>
+        <input type="range" id="volume" min="0" max="10" step="0.01" value="5">
+        <div class="nav-ns">
+          <button id="whiteNoiseBtn">White Noise</button>
+          <button id="pinkNoiseBtn">Pink Noise</button>
+          <button id="stopBtn">Stop</button>
         </div>
       </div>
-
-      <div class="panel">
-        <h2><span class="icon">🎵</span> Reproductor de Audio 2</h2>
-
-        <div class="audio-player-html5" id="audio-player-2">
-          <div class="file-input-container">
-            <input type="file" id="audio-file-2" class="file-input" accept="audio/*" style="color: transparent">
+    </div>  
+  
+    <div class="bineural">
+      <h3>Binaural Beats Generator</h3>
+      <div class="bineural-bn">
+        <div class="frecuencias">
+          <div>
+            <label for="freq1">Frequency Base (Hz):</label>
+            <input type="number" id="freq1" class="insert-Area bn" value="200">
           </div>
-
-          <div class="audio-info-html5">
-            <div class="audio-title" id="audio-title-2">Selecciona un archivo de audio</div>
-            <div class="audio-duration" id="audio-duration-2">-</div>
-          </div>
-
-          <!-- Elemento de audio oculto -->
-          <audio id="html5-audio-2" loop>
-            Tu navegador no soporta el elemento de audio.
-          </audio>
-
-          <!-- Barra de progreso personalizada -->
-          <div class="progress-container">
-            <div class="progress-bar" id="progress-bar-2">
-              <div class="progress-fill" id="progress-fill-2"></div>
-            </div>
-            <div class="progress-time">
-              <span id="current-time-2">0:00</span>
-              <span id="total-time-2">0:00</span>
-            </div>
-          </div>
-
-          <div class="control-group">
-            <label for="audio-volume-2">Volumen Audio 2</label>
-            <div class="slider-container">
-              <input type="range" id="audio-volume-2" min="0" max="100" value="80">
-              <div class="value-display" id="audio-volume-2-value">80%</div>
-            </div>
-          </div>
-
-          <div class="audio-controls-html5">
-            <button id="play-audio-2" class="btn-play" disabled>
-              <span class="icon">▶️</span> Reproducir
-            </button>
-            <button id="pause-audio-2" class="btn-pause" disabled>
-              <span class="icon">⏸️</span> Pausar
-            </button>
-            <button id="stop-audio-2" class="btn-stop" disabled>
-              <span class="icon">⏹️</span> Parar
-            </button>
+          <div>
+            <label for="freq2">Frequency Carrier (Hz):</label>
+            <input type="number" id="freq2" class="insert-Area bn" value="210"><br>
           </div>
         </div>
-
-        <div class="optimization-tips">
-          <h4>⚡ Formatos recomendados:</h4>
-          <ul>
-            <li><strong>WAV:</strong> Más rápido, mejor calidad</li>
-            <li><strong>MP3:</strong> Buen balance calidad/tamaño</li>
-            <li><strong>OGG:</strong> Alternativa eficiente</li>
-          </ul>
+        <div class="volume-bn">
+          <label for="volume">Volume:</label>
+          <span id="volumeLevel">50%</span>
+          <input type="range" id="volumeW" min="0" max="1" step="0.01" value="0.5">
+        </div>  
+    
+        <div class="nav-bn">
+          <button id="startBtn">Start</button>
+          <button id="stopBtnW">Stop</button>
         </div>
       </div>
     </div>
-
-    <div class="main-content">
-      <div class="panel">
-        <h2><span class="icon">🎛️</span> Controles de Generadores</h2>
-
-        <div class="master-controls">
-          <div class="control-group master-volume">
-            <label for="master-volume">Volumen General</label>
-            <div class="slider-container">
-              <input type="range" id="master-volume" min="0" max="100" value="70">
-              <div class="value-display" id="master-volume-value">70%</div>
-            </div>
-          </div>
-        </div>
-
-        <h3><span class="icon">🔊</span> Tonos Isocrónicos</h3>
-
-        <div class="toggle-container">
-          <div class="toggle-label">
-            <span class="icon">⚡</span>
-            <span>Activar Isocrónicos</span>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="toggle-isochronic">
-            <span class="slider"></span>
-          </label>
-        </div>
-
-        <div class="control-group">
-          <label for="iso-frequency">Frecuencia Base (Hz)</label>
-          <div class="slider-container">
-            <input type="range" id="iso-frequency" min="100" max="1000" value="440" step="1">
-            <div class="value-display" id="iso-frequency-value">440 Hz</div>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label for="iso-pulse-rate">Tasa de Pulso (Hz)</label>
-          <div class="slider-container">
-            <input type="range" id="iso-pulse-rate" min="0.5" max="30" value="10" step="0.5">
-            <div class="value-display" id="iso-pulse-rate-value">10 Hz</div>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label>Patrón de Onda</label>
-          <div class="pattern-selector">
-            <div class="pattern-option active" data-pattern="square" data-generator="isochronic">
-              <span class="pattern-icon">⎍</span>
-              <span>Cuadrado</span>
-            </div>
-            <div class="pattern-option" data-pattern="sine" data-generator="isochronic">
-              <span class="pattern-icon">∿</span>
-              <span>Sinusoidal</span>
-            </div>
-            <div class="pattern-option" data-pattern="sawtooth" data-generator="isochronic">
-              <span class="pattern-icon">⩘</span>
-              <span>Sierra</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label for="iso-volume">Volumen</label>
-          <div class="slider-container">
-            <input type="range" id="iso-volume" min="0" max="100" value="60">
-            <div class="value-display" id="iso-volume-value">60%</div>
-          </div>
-        </div>
-
-        <h3><span class="icon">🎧</span> Tonos Bineurales</h3>
-
-        <div class="toggle-container">
-          <div class="toggle-label">
-            <span class="icon">⚡</span>
-            <span>Activar Bineurales</span>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="toggle-binaural">
-            <span class="slider"></span>
-          </label>
-        </div>
-
-        <div class="control-group">
-          <label for="bin-base-frequency">Frecuencia Base (Hz)</label>
-          <div class="slider-container">
-            <input type="range" id="bin-base-frequency" min="100" max="500" value="200" step="1">
-            <div class="value-display" id="bin-base-frequency-value">200 Hz</div>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label for="bin-delta-frequency">Diferencia de Frecuencia (Hz)</label>
-          <div class="slider-container">
-            <input type="range" id="bin-delta-frequency" min="1" max="30" value="10" step="0.5">
-            <div class="value-display" id="bin-delta-frequency-value">10 Hz</div>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label>Patrón de Onda</label>
-          <div class="pattern-selector">
-            <div class="pattern-option active" data-pattern="square" data-generator="binaural">
-              <span class="pattern-icon">⎍</span>
-              <span>Cuadrado</span>
-            </div>
-            <div class="pattern-option" data-pattern="sine" data-generator="binaural">
-              <span class="pattern-icon">∿</span>
-              <span>Sinusoidal</span>
-            </div>
-            <div class="pattern-option" data-pattern="sawtooth" data-generator="binaural">
-              <span class="pattern-icon">⩘</span>
-              <span>Sierra</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label for="bin-volume">Volumen</label>
-          <div class="slider-container">
-            <input type="range" id="bin-volume" min="0" max="100" value="50">
-            <div class="value-display" id="bin-volume-value">50%</div>
-          </div>
-        </div>
-
-        <h3><span class="icon">🌊</span> Generador de Ruido</h3>
-
-        <div class="toggle-container">
-          <div class="toggle-label">
-            <span class="icon">⚡</span>
-            <span>Activar Ruido</span>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="toggle-noise">
-            <span class="slider"></span>
-          </label>
-        </div>
-
-        <div class="control-group">
-          <label for="noise-type">Tipo de Ruido</label>
-          <div class="pattern-selector">
-            <div class="pattern-option active" data-noise="white" data-generator="noise">
-              <span class="pattern-icon">⚪</span>
-              <span>Blanco</span>
-            </div>
-            <div class="pattern-option" data-noise="pink" data-generator="noise">
-              <span class="pattern-icon">🟣</span>
-              <span>Rosa</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="noise-controls">
-          <div class="control-group">
-            <label for="noise-volume">Volumen</label>
-            <div class="slider-container">
-              <input type="range" id="noise-volume" min="0" max="100" value="40">
-              <div class="value-display" id="noise-volume-value">40%</div>
-            </div>
-          </div>
-
-          <div class="control-group">
-            <label for="noise-filter">Filtro (Hz)</label>
-            <div class="slider-container">
-              <input type="range" id="noise-filter" min="20" max="20000" value="10000">
-              <div class="value-display" id="noise-filter-value">10000 Hz</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="buttons">
-          <button id="startAllBtn" class="btn-primary">
-            <span class="icon">▶️</span> Iniciar Todo
-          </button>
-          <button id="stopAllBtn" class="btn-danger" disabled>
-            <span class="icon">⏹️</span> Detener Todo
-          </button>
-        </div>
-
-        <div class="status">
-          <div class="status-item">
-            <span>Isocrónicos:</span>
-            <span class="status-inactive" id="status-isochronic">Inactivo</span>
-          </div>
-          <div class="status-item">
-            <span>Bineurales:</span>
-            <span class="status-inactive" id="status-binaural">Inactivo</span>
-          </div>
-          <div class="status-item">
-            <span>Ruido:</span>
-            <span class="status-inactive" id="status-noise">Inactivo</span>
-          </div>
-          <div class="status-item">
-            <span>Audio 1:</span>
-            <span class="status-inactive" id="status-audio-1">Inactivo</span>
-          </div>
-          <div class="status-item">
-            <span>Audio 2:</span>
-            <span class="status-inactive" id="status-audio-2">Inactivo</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2><span class="icon">📊</span> Visualización</h2>
-
-        <div class="visualization-container">
-          <div class="visualization">
-            <canvas id="waveCanvas"></canvas>
-          </div>
-        </div>
-
-        <div class="spectrum-analyzer">
-          <h2><span class="icon">📈</span> Analizador de Espectro</h2>
-
-          <div class="analyzer-container">
-            <canvas id="spectrumCanvas"></canvas>
-          </div>
-          <div class="frequency-labels">
-            <span>20 Hz</span>
-            <span>200 Hz</span>
-            <span>2 kHz</span>
-            <span>20 kHz</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="warning">
-      <strong>Advertencia:</strong> No utilice este generador si es epiléptico o tiene sensibilidad a estímulos
-      auditivos. Use con moderación y a volumen bajo. Los tonos bineurales requieren el uso de auriculares
-      estereofónicos.
-    </div>
+  
+    <footer class="footer"><a rel="noopener" target="_blank"  href="https://github.com/dashboard" class="link-a">&copy; Neuro Hack Player</a>
+  </footer>
+    
   </div>
+  
   <script src="main.js"></script>
+  
 </body>
-
 </html>
