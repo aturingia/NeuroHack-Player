@@ -303,7 +303,7 @@ html{
    }
  }
 
- @media (max-width: 768px) {
+ @media (max-width: 720px) {
    body {
      padding: 0.5rem;
    }
