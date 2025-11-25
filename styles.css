@@ -5,7 +5,6 @@
   padding: 0;
   margin: 0;
   min-height: 100%;
- /*outline: solid 1px rgb(49, 49, 49);*/
 }
 
 html{
@@ -22,6 +21,7 @@ body {
 }
 h3 {
   font-size: 25px;
+  margin-bottom: 15px;
 }
 .titulo-logo {
   font-size: 37px;
@@ -45,7 +45,7 @@ h3 {
 }
 
 .noise-gn {
-  margin-top: 83px;
+  margin-top: 20px;
   margin-bottom: 20px;
   font-size: 16px;
   width: 361px;
@@ -73,7 +73,7 @@ h3 {
 }
 
 .bineural-bn {
-  margin-top: 28.5px;
+  margin-top: 20px;
   margin-bottom: 20px;
   font-size: 16px;
   width: 361px;
@@ -83,11 +83,27 @@ h3 {
   width: 361px;
 }
 
+.isochronic {
+  text-align: center;
+}
+
+.isochronic-gn {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  width: 361px;
+}
+
 .link-a {
   font-size: 14px;
   text-decoration: none;
 }
 
+select {
+  padding: 5px;
+  margin: 5px;
+  width: 120px;
+}
 
 input {
     width: 80%;
@@ -108,7 +124,13 @@ button {
     background-color: #007bff;
     color: #fff;
     border: none;
+    border-radius: 30px;
     cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
 
 iframe {
@@ -135,6 +157,7 @@ iframe {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .youtube {
@@ -201,17 +224,54 @@ iframe {
   
 }
 
+.isochronic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.isochronic-gn {
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
 .frecuencias{
   display: flex;
   flex-direction: row;
   justify-content:center;
   align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
+
+.noise-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.noise-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.noise-slider label {
+  margin-bottom: 5px;
+}
+
 .footer {
   display: flex;
   flex-direction:column;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
 /* GRID */
@@ -243,13 +303,17 @@ iframe {
   grid-area: bineural;
 }
 
+.isochronic {
+  grid-area: isochronic;
+}
+
 .footer {
   grid-area: footer;
 }
 
 .grid-container {
   display: grid;
-  gap: 10px;
+  gap: 20px;
   grid-template:
     "header" 
     "youtube"
@@ -258,6 +322,7 @@ iframe {
     "player-2"
     "noise" 
     "bineural"
+    "isochronic"
     "footer"  /
      480px;
 }
@@ -266,7 +331,7 @@ iframe {
 
 @media(min-width: 768px) {
   .grid-container{
-    gap: 10px;
+    gap: 20px;
     grid-template:
       "header header" 
       "youtube youtube"
@@ -274,6 +339,7 @@ iframe {
       "player-1 player-1"
       "player-2 player-2"
       "noise bineural" 
+      "isochronic isochronic"
       "footer footer" /
        50% 50% ;
     
@@ -284,14 +350,12 @@ iframe {
 }
   
   .player {
-  /*display: flex;*/
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
   
   .reproductores{
-    /*display: flex;*/
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -301,16 +365,16 @@ iframe {
 
 @media(min-width: 1200px) {
   .grid-container{
-    gap: 10px;
+    gap: 20px;
     grid-template:
-      "header header" 
-      "youtube youtube"
-      "player player"
-      "player-1 player-1"
-      "player-2 player-2"
-      "noise bineural" 
-      "footer footer" /
-       50% 50% ;
+      "header header header" 
+      "youtube youtube youtube"
+      "player player player"
+      "player-1 player-1 player-1"
+      "player-2 player-2 player-2"
+      "noise bineural isochronic" 
+      "footer footer footer" /
+       33% 33% 33% ;
   }
   iframe {
   width: 560px;
@@ -318,7 +382,6 @@ iframe {
 }
   
   .player {
-  /*display: flex;*/
   flex-direction: column;
   justify-content: center;
   align-items: center;
