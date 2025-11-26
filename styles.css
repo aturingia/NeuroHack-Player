@@ -73,7 +73,7 @@ h3 {
 }
 
 .bineural-bn {
-  margin-top: 20px;
+  margin-top: 28.5px;
   margin-bottom: 20px;
   font-size: 16px;
   width: 361px;
@@ -83,26 +83,42 @@ h3 {
   width: 361px;
 }
 
-.isochronic {
-  text-align: center;
-}
-
-.isochronic-gn {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  width: 361px;
-}
-
 .link-a {
   font-size: 14px;
   text-decoration: none;
 }
 
-select {
-  padding: 5px;
-  margin: 5px;
-  width: 120px;
+.wave-type {
+  margin: 10px 0;
+}
+
+.wave-type select {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #444444;
+}
+
+.noise-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.noise-control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.noise-control-row label {
+  width: 150px;
+  text-align: left;
+}
+
+.noise-control-row input,
+.noise-control-row select {
+  width: 150px;
 }
 
 input {
@@ -124,13 +140,18 @@ button {
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 30px;
     cursor: pointer;
-    margin: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
 }
 
 iframe {
@@ -157,7 +178,6 @@ iframe {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .youtube {
@@ -224,54 +244,17 @@ iframe {
   
 }
 
-.isochronic {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.isochronic-gn {
-  display: flex;
-  flex-direction:column;
-  justify-content: center;
-  align-items: center;
-  
-}
-
 .frecuencias{
   display: flex;
   flex-direction: row;
   justify-content:center;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
 }
-
-.noise-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.noise-slider {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.noise-slider label {
-  margin-bottom: 5px;
-}
-
 .footer {
   display: flex;
   flex-direction:column;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
 }
 
 /* GRID */
@@ -303,17 +286,13 @@ iframe {
   grid-area: bineural;
 }
 
-.isochronic {
-  grid-area: isochronic;
-}
-
 .footer {
   grid-area: footer;
 }
 
 .grid-container {
   display: grid;
-  gap: 20px;
+  gap: 10px;
   grid-template:
     "header" 
     "youtube"
@@ -322,7 +301,6 @@ iframe {
     "player-2"
     "noise" 
     "bineural"
-    "isochronic"
     "footer"  /
      480px;
 }
@@ -331,7 +309,7 @@ iframe {
 
 @media(min-width: 768px) {
   .grid-container{
-    gap: 20px;
+    gap: 10px;
     grid-template:
       "header header" 
       "youtube youtube"
@@ -339,7 +317,6 @@ iframe {
       "player-1 player-1"
       "player-2 player-2"
       "noise bineural" 
-      "isochronic isochronic"
       "footer footer" /
        50% 50% ;
     
@@ -365,16 +342,16 @@ iframe {
 
 @media(min-width: 1200px) {
   .grid-container{
-    gap: 20px;
+    gap: 10px;
     grid-template:
-      "header header header" 
-      "youtube youtube youtube"
-      "player player player"
-      "player-1 player-1 player-1"
-      "player-2 player-2 player-2"
-      "noise bineural isochronic" 
-      "footer footer footer" /
-       33% 33% 33% ;
+      "header header" 
+      "youtube youtube"
+      "player player"
+      "player-1 player-1"
+      "player-2 player-2"
+      "noise bineural" 
+      "footer footer" /
+       50% 50% ;
   }
   iframe {
   width: 560px;

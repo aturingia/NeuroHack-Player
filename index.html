@@ -28,87 +28,103 @@
     </div>
   
     <div class="player">
-      <h3>Loop Player</h3><br>
-      <div class="reproductores">
-        <div class="player-1"> 
-          <div class="loop-player">
-            <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
-            <label>Volume:</label>
-            <span class="volumeLevel">100%</span><br>
-            <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100">
-            <div class="nav-pl">
-              <button class="startButton">Start</button>
-              <button class="stopButton">Stop</button>
-              <audio class="audioPlayer" loop></audio>
-            </div>
-          </div>      
-
-          <div class="loop-player">
-            <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
-            <label>Volume:</label>
-            <span class="volumeLevel">100%</span><br>     
-            <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
-            <div class="nav-pl">
-              <button class="startButton">Start</button>
-              <button class="stopButton">Stop</button>
-              <audio class="audioPlayer" loop></audio>
-            </div>          
-          </div>
-        </div>
       
-        <div class="player-2">
-          <div class="loop-player">
-            <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
-            <label>Volume:</label>
-            <span class="volumeLevel">100%</span><br>     
-            <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
-            <div class="nav-pl">
-              <button class="startButton">Start</button>
-              <button class="stopButton">Stop</button>
-              <audio class="audioPlayer" loop></audio>
+        <h3>Loop Player</h3><br>
+        <div class="reproductores">
+          <div class="player-1"> 
+            
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br>
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100">
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>
+            </div>      
+    
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br>     
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>          
             </div>
+            
           </div>
-
-          <div class="loop-player">
-            <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
-            <label>Volume:</label>
-            <span class="volumeLevel">100%</span><br> 
-            <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
-            <div class="nav-pl">
-              <button class="startButton">Start</button>
-              <button class="stopButton">Stop</button>
-              <audio class="audioPlayer" loop></audio>
+        
+        
+          <div class="player-2">
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br>     
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>
             </div>
+    
+            <div class="loop-player">
+              <input type="file" class="audioFile" accept="audio/*" style="color: transparent"><br>
+              <label>Volume:</label>
+              <span class="volumeLevel">100%</span><br> 
+              <input type="range" class="volumeSlider" min="0" max="100" step="1" value="100"><br>
+              <div class="nav-pl">
+                <button class="startButton">Start</button>
+                <button class="stopButton">Stop</button>
+                <audio class="audioPlayer" loop></audio>
+              </div>
+            </div>
+          
           </div>
+        
         </div>
-      </div>
     </div>
 
     <div class="noise">
       <h3>Noise Generator</h3>
       <div class="noise-gn">
         <div class="noise-controls">
-          <div class="noise-slider">
-            <label for="noiseFrequency">Frequency: <span id="frequencyValue">440 Hz</span></label>
-            <input type="range" id="noiseFrequency" min="20" max="2000" step="1" value="440">
+          <div class="noise-control-row">
+            <label for="noiseType">Noise Type:</label>
+            <select id="noiseType">
+              <option value="white">White Noise</option>
+              <option value="pink">Pink Noise</option>
+              <option value="brown">Brown Noise</option>
+            </select>
           </div>
-          
-          <div class="noise-slider">
-            <label for="volume">Volume: <span id="volumeValue">50%</span></label>
+          <div class="noise-control-row">
+            <label for="frequencyRange">Frequency (Hz):</label>
+            <select id="frequencyRange">
+              <option value="full">Full Spectrum</option>
+              <option value="low">Low (20-250 Hz)</option>
+              <option value="mid">Mid (250-2000 Hz)</option>
+              <option value="high">High (2000-20000 Hz)</option>
+            </select>
+          </div>
+          <div class="noise-control-row">
+            <label for="volume">Volume:</label>
+            <span id="volumeValue">50%</span>
             <input type="range" id="volume" min="0" max="100" step="1" value="50">
           </div>
-          
-          <div class="noise-slider">
-            <label for="reverb">Reverb: <span id="reverbValue">0%</span></label>
+          <div class="noise-control-row">
+            <label for="reverb">Reverb:</label>
+            <span id="reverbValue">0%</span>
             <input type="range" id="reverb" min="0" max="100" step="1" value="0">
           </div>
         </div>
-        
         <div class="nav-ns">
-          <button id="whiteNoiseBtn">White Noise</button>
-          <button id="pinkNoiseBtn">Pink Noise</button>
-          <button id="brownNoiseBtn">Brown Noise</button>
-          <button id="stopBtn">Stop</button>
+          <button id="startNoiseBtn">Start Noise</button>
+          <button id="stopNoiseBtn">Stop Noise</button>
         </div>
       </div>
     </div>  
@@ -118,26 +134,26 @@
       <div class="bineural-bn">
         <div class="frecuencias">
           <div>
-            <label for="freq1">Base (Hz):</label>
-            <input type="number" id="freq1" class="insert-Area bn" value="200" min="20" max="1000">
+            <label for="freq1">Frequency Base (Hz):</label>
+            <input type="number" id="freq1" class="insert-Area bn" value="200">
           </div>
           <div>
-            <label for="freq2">Carrier (Hz):</label>
-            <input type="number" id="freq2" class="insert-Area bn" value="210" min="20" max="1000"><br>
+            <label for="freq2">Frequency Carrier (Hz):</label>
+            <input type="number" id="freq2" class="insert-Area bn" value="210"><br>
           </div>
         </div>
-        <div>
-          <label for="waveTypeBinaural">Wave Type:</label>
-          <select id="waveTypeBinaural">
+        <div class="wave-type">
+          <label for="waveType">Wave Type:</label>
+          <select id="waveType">
             <option value="sine">Sine</option>
             <option value="sawtooth">Sawtooth</option>
             <option value="square">Square</option>
           </select>
         </div>
         <div class="volume-bn">
-          <label for="volumeW">Volume:</label>
+          <label for="volume">Volume:</label>
           <span id="volumeLevel">50%</span>
-          <input type="range" id="volumeW" min="0" max="100" step="1" value="50">
+          <input type="range" id="volumeW" min="0" max="1" step="0.01" value="0.5">
         </div>  
     
         <div class="nav-bn">
@@ -146,42 +162,11 @@
         </div>
       </div>
     </div>
-    
-    <div class="isochronic">
-      <h3>Isochronic Tones Generator</h3>
-      <div class="isochronic-gn">
-        <div class="frecuencias">
-          <div>
-            <label for="isoFreq">Frequency (Hz):</label>
-            <input type="number" id="isoFreq" class="insert-Area bn" value="10" min="0.1" max="50">
-          </div>
-        </div>
-        <div>
-          <label for="waveTypeIsochronic">Wave Type:</label>
-          <select id="waveTypeIsochronic">
-            <option value="sine">Sine</option>
-            <option value="sawtooth">Sawtooth</option>
-            <option value="square">Square</option>
-          </select>
-        </div>
-        <div class="volume-bn">
-          <label for="volumeIso">Volume:</label>
-          <span id="volumeLevelIso">50%</span>
-          <input type="range" id="volumeIso" min="0" max="100" step="1" value="50">
-        </div>  
-    
-        <div class="nav-bn">
-          <button id="startBtnIso">Start</button>
-          <button id="stopBtnIso">Stop</button>
-        </div>
-      </div>
-    </div>
   
-    <footer class="footer">
-      <a rel="noopener" target="_blank" href="https://github.com/dashboard" class="link-a">&copy; Neuro Hack Player</a>
-    </footer>
+    <footer class="footer"><a rel="noopener" target="_blank"  href="https://github.com/dashboard" class="link-a">&copy; Neuro Hack Player</a>
+  </footer>
     
   </div>
-  <script src="main.js"></script>
+  <script src="main.css"></script>
 </body>
 </html>
