@@ -1,4 +1,63 @@
-//================= Loop Players =========================
+// Prevenir comportamiento por defecto en sliders para Android
+    document.addEventListener('DOMContentLoaded', function() {
+      // Prevenir gestos no deseados en sliders
+      const sliders = document.querySelectorAll('input[type="range"]');
+      
+      sliders.forEach(slider => {
+        // Prevenir el gesto de pantalla completa en Chrome para Android
+        slider.addEventListener('touchstart', function(e) {
+          e.stopPropagation();
+          if (e.touches.length > 1) {
+            e.preventDefault(); // Prevenir zoom con dos dedos
+          }
+        }, { passive: false });
+        
+        // Prevenir scroll mientras se desliza
+        slider.addEventListener('touchmove', function(e) {
+          if (e.touches.length === 1) {
+            e.preventDefault(); // Solo prevenir con un dedo
+          }
+        }, { passive: false });
+        
+        // Mejorar feedback táctil
+        slider.addEventListener('touchstart', function() {
+          this.style.cursor = 'grabbing';
+        });
+        
+        slider.addEventListener('touchend', function() {
+          this.style.cursor = 'pointer';
+        });
+      });
+      
+      // Prevenir gestos en botones
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+        button.addEventListener('touchstart', function(e) {
+          e.stopPropagation();
+          this.style.transform = 'scale(0.98)';
+        });
+        
+        button.addEventListener('touchend', function() {
+          this.style.transform = 'scale(1)';
+        });
+        
+        button.addEventListener('touchcancel', function() {
+          this.style.transform = 'scale(1)';
+        });
+      });
+      
+      // Prevenir zoom en inputs
+      const inputs = document.querySelectorAll('input[type="text"], input[type="number"]');
+      inputs.forEach(input => {
+        input.addEventListener('touchstart', function(e) {
+          if (e.touches.length > 1) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+      });
+    });
+
+    //================= Loop Players =========================
     document.addEventListener('DOMContentLoaded', function () {
         const startButtons = document.querySelectorAll('.startButton');
         const stopButtons = document.querySelectorAll('.stopButton');
@@ -16,13 +75,22 @@
             startButton.addEventListener('click', function () {
                 const audioPlayer = audioPlayers[index];
                 if (audioPlayer.src && audioPlayer.src !== window.location.href) {
-                    audioPlayer.play();
+                    audioPlayer.play().catch(e => {
+                        console.error("Error playing audio:", e);
+                        alert("Error playing audio. Please try again.");
+                    });
                     startButton.disabled = true;
                     stopButtons[index].disabled = false;
                 } else {
                     alert('Please select an audio file first.');
                 }
             });
+            
+            // Touch event para móvil
+            startButton.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                this.click();
+            }, { passive: false });
         });
 
         stopButtons.forEach((stopButton, index) => {
@@ -33,6 +101,12 @@
                 stopButton.disabled = true;
                 startButtons[index].disabled = false;
             });
+            
+            // Touch event para móvil
+            stopButton.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                this.click();
+            }, { passive: false });
         });
 
         audioFiles.forEach((audioFile, index) => {
@@ -54,6 +128,15 @@
                 const volumePercentage = volumeSlider.value + '%';
                 audioPlayer.volume = volumeSlider.value / 100;
                 volumeLevel.textContent = volumePercentage;
+            });
+            
+            // Touch events mejorados para móvil
+            volumeSlider.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+            });
+            
+            volumeSlider.addEventListener('touchmove', function(e) {
+                e.stopPropagation();
             });
         });
     });
@@ -181,6 +264,11 @@
                 noiseAudioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
             
+            // Resumir contexto si está suspendido
+            if (noiseAudioContext.state === 'suspended') {
+                noiseAudioContext.resume();
+            }
+            
             const noiseType = document.getElementById('noiseType').value;
             const frequencyRange = document.getElementById('frequencyRange').value;
             const volume = noiseVolumeSlider.value / 100;
@@ -201,11 +289,23 @@
             
             playNoise(buffer, frequencyRange, volume, reverbAmount);
         });
+        
+        // Touch event para móvil
+        startNoiseBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.click();
+        }, { passive: false });
 
         // Stop noise
         stopNoiseBtn.addEventListener('click', () => {
             stopNoise();
         });
+        
+        // Touch event para móvil
+        stopNoiseBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.click();
+        }, { passive: false });
 
         // Play noise function
         function playNoise(buffer, frequencyRange, volume, reverbAmount) {
@@ -250,7 +350,11 @@
 
         function stopNoise() {
             if (noiseSourceNode) {
-                noiseSourceNode.stop();
+                try {
+                    noiseSourceNode.stop();
+                } catch(e) {
+                    console.log("Noise already stopped");
+                }
                 noiseSourceNode.disconnect();
                 noiseSourceNode = null;
             }
@@ -285,6 +389,12 @@
         var playerDiv = document.getElementById('player');
         playerDiv.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=' + playlistID + '&autoplay=1&loop=0&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
     }
+    
+    // Touch event para el botón de YouTube
+    document.getElementById('loadPlaylistBtn').addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        this.click();
+    }, { passive: false });
 
     //================ Binaural Beats Generator ========================
     document.addEventListener('DOMContentLoaded', function() {
@@ -324,6 +434,11 @@
             if (!binauralAudioContext) {
                 binauralAudioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
+            
+            // Resumir contexto si está suspendido
+            if (binauralAudioContext.state === 'suspended') {
+                binauralAudioContext.resume();
+            }
 
             oscillator1 = binauralAudioContext.createOscillator();
             oscillator1.type = waveType;
@@ -346,11 +461,23 @@
             startBinauralBtn.disabled = true;
             stopBinauralBtn.disabled = false;
         });
+        
+        // Touch event para móvil
+        startBinauralBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.click();
+        }, { passive: false });
 
         // Stop binaural beats
         stopBinauralBtn.addEventListener('click', () => {
             stopBinauralBeats();
         });
+        
+        // Touch event para móvil
+        stopBinauralBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.click();
+        }, { passive: false });
 
         function stopBinauralBeats() {
             if (oscillator1) {
@@ -371,3 +498,9 @@
        var element = document.body;
        element.classList.toggle("dark-mode");
     }
+    
+    // Touch event para dark mode
+    document.getElementById('darkModeBtn').addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        this.click();
+    }, { passive: false });

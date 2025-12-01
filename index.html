@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="shortcut icon" size="16x16 24x24 32x32 48x48" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Neuro Hack Player</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
-	<title>Neuro Hack Player</title>
 </head>
 <body>
-	<div class="grid-container">
+  <div class="grid-container">
     
     <div class="header">
-      <img src="https://github.com/aturingia/img-src/blob/main/brain%20logo_5232804%20(1).png?raw=true" width="90" height="90" alt="logo">
+      <img src="https://github.com/aturingia/img-src/blob/main/brain%20logo_5232804%20(1).png?raw=true" width="90" height="90" alt="logo" style="pointer-events: none;">
       <p class="titulo-logo">Neuro Hack Player</p><br>
-      <button onclick="toggleDarkMode()">Dark mode</button>
+      <button onclick="toggleDarkMode()" id="darkModeBtn">Dark mode</button>
     </div>
   
     <div class="youtube">
       <h3>Youtube Player</h3>
-      <input type="text" id="playlistURL" class="insert-Area" placeholder="Insert YouTube Playlist URL"><br>
-      <button onclick="loadPlaylist()">Load Playlist</button>
+      <input type="text" id="playlistURL" class="insert-Area" placeholder="Insert YouTube Playlist URL" inputmode="url"><br>
+      <button onclick="loadPlaylist()" id="loadPlaylistBtn">Load Playlist</button>
       <div id="player"></div>
     </div>
   
@@ -132,11 +131,11 @@
         <div class="frecuencias">
           <div>
             <label for="freq1">Frequency Base (Hz):</label>
-            <input type="number" id="freq1" class="insert-Area bn" value="200">
+            <input type="number" id="freq1" class="insert-Area bn" value="200" inputmode="decimal">
           </div>
           <div>
             <label for="freq2">Frequency Carrier (Hz):</label>
-            <input type="number" id="freq2" class="insert-Area bn" value="210"><br>
+            <input type="number" id="freq2" class="insert-Area bn" value="210" inputmode="decimal"><br>
           </div>
         </div>
         <div class="wave-type">
