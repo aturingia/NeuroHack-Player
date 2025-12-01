@@ -1,60 +1,76 @@
-// Prevenir comportamiento por defecto en sliders para Android
+//================= MEJORAS PARA SLIDERS MULTIPLATAFORMA =========================
     document.addEventListener('DOMContentLoaded', function() {
-      // Prevenir gestos no deseados en sliders
+      // Configuración mejorada para sliders en móvil
       const sliders = document.querySelectorAll('input[type="range"]');
       
       sliders.forEach(slider => {
-        // Prevenir el gesto de pantalla completa en Chrome para Android
+        // Prevenir comportamientos no deseados en Android
         slider.addEventListener('touchstart', function(e) {
           e.stopPropagation();
-          if (e.touches.length > 1) {
-            e.preventDefault(); // Prevenir zoom con dos dedos
-          }
+          e.preventDefault();
+          this.classList.add('slider-active');
+          
+          // Iniciar seguimiento del gesto
+          const startX = e.touches[0].clientX;
+          const startValue = parseFloat(this.value);
+          const max = parseFloat(this.max);
+          const min = parseFloat(this.min);
+          const rect = this.getBoundingClientRect();
+          const totalWidth = rect.width;
+          
+          const moveHandler = (moveEvent) => {
+            moveEvent.preventDefault();
+            moveEvent.stopPropagation();
+            
+            const currentX = moveEvent.touches[0].clientX;
+            const diff = currentX - startX;
+            const percentage = diff / totalWidth;
+            const range = max - min;
+            const newValue = startValue + (percentage * range);
+            
+            // Limitar el valor entre min y max
+            const clampedValue = Math.max(min, Math.min(max, newValue));
+            
+            // Actualizar slider
+            this.value = clampedValue;
+            
+            // Disparar evento input
+            this.dispatchEvent(new Event('input', { bubbles: true }));
+          };
+          
+          const endHandler = () => {
+            document.removeEventListener('touchmove', moveHandler);
+            document.removeEventListener('touchend', endHandler);
+            this.classList.remove('slider-active');
+            
+            // Disparar evento change
+            this.dispatchEvent(new Event('change', { bubbles: true }));
+          };
+          
+          document.addEventListener('touchmove', moveHandler, { passive: false });
+          document.addEventListener('touchend', endHandler, { passive: false });
         }, { passive: false });
         
-        // Prevenir scroll mientras se desliza
-        slider.addEventListener('touchmove', function(e) {
-          if (e.touches.length === 1) {
-            e.preventDefault(); // Solo prevenir con un dedo
-          }
-        }, { passive: false });
-        
-        // Mejorar feedback táctil
-        slider.addEventListener('touchstart', function() {
-          this.style.cursor = 'grabbing';
+        // Mejor feedback visual
+        slider.addEventListener('mousedown', function() {
+          this.classList.add('slider-active');
         });
         
-        slider.addEventListener('touchend', function() {
-          this.style.cursor = 'pointer';
+        slider.addEventListener('mouseup', function() {
+          this.classList.remove('slider-active');
+        });
+        
+        slider.addEventListener('mouseleave', function() {
+          this.classList.remove('slider-active');
         });
       });
       
-      // Prevenir gestos en botones
-      const buttons = document.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.addEventListener('touchstart', function(e) {
-          e.stopPropagation();
-          this.style.transform = 'scale(0.98)';
-        });
-        
-        button.addEventListener('touchend', function() {
-          this.style.transform = 'scale(1)';
-        });
-        
-        button.addEventListener('touchcancel', function() {
-          this.style.transform = 'scale(1)';
-        });
-      });
-      
-      // Prevenir zoom en inputs
-      const inputs = document.querySelectorAll('input[type="text"], input[type="number"]');
-      inputs.forEach(input => {
-        input.addEventListener('touchstart', function(e) {
-          if (e.touches.length > 1) {
-            e.preventDefault();
-          }
-        }, { passive: false });
-      });
+      // Prevenir gestos de navegación mientras se interactúa con sliders
+      document.addEventListener('touchmove', function(e) {
+        if (e.target.type === 'range' || e.target.classList.contains('slider-active')) {
+          e.preventDefault();
+        }
+      }, { passive: false });
     });
 
     //================= Loop Players =========================
@@ -86,11 +102,17 @@
                 }
             });
             
-            // Touch event para móvil
+            // Touch event optimizado
             startButton.addEventListener('touchstart', function(e) {
-                e.preventDefault();
+                e.stopPropagation();
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            startButton.addEventListener('touchend', function(e) {
+                e.stopPropagation();
+                this.style.transform = '';
                 this.click();
-            }, { passive: false });
+            });
         });
 
         stopButtons.forEach((stopButton, index) => {
@@ -102,11 +124,17 @@
                 startButtons[index].disabled = false;
             });
             
-            // Touch event para móvil
+            // Touch event optimizado
             stopButton.addEventListener('touchstart', function(e) {
-                e.preventDefault();
+                e.stopPropagation();
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            stopButton.addEventListener('touchend', function(e) {
+                e.stopPropagation();
+                this.style.transform = '';
                 this.click();
-            }, { passive: false });
+            });
         });
 
         audioFiles.forEach((audioFile, index) => {
@@ -128,26 +156,24 @@
                 const volumePercentage = volumeSlider.value + '%';
                 audioPlayer.volume = volumeSlider.value / 100;
                 volumeLevel.textContent = volumePercentage;
-            });
-            
-            // Touch events mejorados para móvil
-            volumeSlider.addEventListener('touchstart', function(e) {
-                e.stopPropagation();
-            });
-            
-            volumeSlider.addEventListener('touchmove', function(e) {
-                e.stopPropagation();
+                
+                // Feedback visual
+                volumeLevel.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    volumeLevel.style.transform = '';
+                }, 200);
             });
         });
     });
 
-    //================ Noise Generator =======================
+    //================ Noise Generator Continuo (Sin Loop) =======================
     let noiseAudioContext = null;
     let noiseSourceNode = null;
     let noiseGainNode = null;
     let noiseFilterNode = null;
     let convolverNode = null;
     let isNoisePlaying = false;
+    let noiseBufferSize = 44100; // 1 segundo a 44.1kHz
 
     document.addEventListener('DOMContentLoaded', function() {
         const startNoiseBtn = document.getElementById('startNoiseBtn');
@@ -157,66 +183,94 @@
         const reverbSlider = document.getElementById('reverbSlider');
         const reverbValue = document.getElementById('reverbValue');
 
-        // Create reverb
-        function createReverb(audioContext) {
-            const sampleRate = audioContext.sampleRate;
-            const length = sampleRate * 2;
-            const impulse = audioContext.createBuffer(2, length, sampleRate);
-            const left = impulse.getChannelData(0);
-            const right = impulse.getChannelData(1);
-            
-            for (let i = 0; i < length; i++) {
-                left[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 2);
-                right[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 2);
-            }
-            
-            const convolver = audioContext.createConvolver();
-            convolver.buffer = impulse;
-            return convolver;
-        }
-
-        // Noise generators
-        function generateWhiteNoise(audioContext) {
-            const bufferSize = 2 * audioContext.sampleRate;
+        // Crear buffer de ruido más largo para sonido continuo
+        function generateContinuousNoise(audioContext, type) {
+            // Buffer más largo para sonido continuo (10 segundos)
+            const bufferSize = audioContext.sampleRate * 10; // 10 segundos
             const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
             const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                data[i] = Math.random() * 2 - 1;
+            
+            switch(type) {
+                case 'white':
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = Math.random() * 2 - 1;
+                    }
+                    break;
+                    
+                case 'pink':
+                    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+                    for (let i = 0; i < bufferSize; i++) {
+                        const white = Math.random() * 2 - 1;
+                        b0 = 0.99886 * b0 + white * 0.0555179;
+                        b1 = 0.99332 * b1 + white * 0.0750759;
+                        b2 = 0.96900 * b2 + white * 0.1538520;
+                        b3 = 0.86650 * b3 + white * 0.3104856;
+                        b4 = 0.55000 * b4 + white * 0.5329522;
+                        b5 = -0.7616 * b5 - white * 0.0168980;
+                        data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+                        b6 = white * 0.115926;
+                    }
+                    break;
+                    
+                case 'brown':
+                    let lastOut = 0.0;
+                    for (let i = 0; i < bufferSize; i++) {
+                        const white = Math.random() * 2 - 1;
+                        data[i] = (lastOut + (0.02 * white)) / 1.02;
+                        lastOut = data[i];
+                        data[i] *= 3.5;
+                    }
+                    break;
             }
+            
             return buffer;
         }
 
-        function generatePinkNoise(audioContext) {
-            const bufferSize = 2 * audioContext.sampleRate;
-            const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-            const data = buffer.getChannelData(0);
+        // Función para crear ruido en tiempo real (streaming)
+        function createNoiseStream(audioContext, type) {
+            const bufferSize = 4096; // Tamaño del buffer para procesamiento en tiempo real
+            const scriptNode = audioContext.createScriptProcessor(bufferSize, 1, 1);
+            
             let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-            for (let i = 0; i < bufferSize; i++) {
-                const white = Math.random() * 2 - 1;
-                b0 = 0.99886 * b0 + white * 0.0555179;
-                b1 = 0.99332 * b1 + white * 0.0750759;
-                b2 = 0.96900 * b2 + white * 0.1538520;
-                b3 = 0.86650 * b3 + white * 0.3104856;
-                b4 = 0.55000 * b4 + white * 0.5329522;
-                b5 = -0.7616 * b5 - white * 0.0168980;
-                data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
-                b6 = white * 0.115926;
-            }
-            return buffer;
-        }
-
-        function generateBrownNoise(audioContext) {
-            const bufferSize = 2 * audioContext.sampleRate;
-            const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-            const data = buffer.getChannelData(0);
             let lastOut = 0.0;
-            for (let i = 0; i < bufferSize; i++) {
-                const white = Math.random() * 2 - 1;
-                data[i] = (lastOut + (0.02 * white)) / 1.02;
-                lastOut = data[i];
-                data[i] *= 3.5;
-            }
-            return buffer;
+            
+            scriptNode.onaudioprocess = function(audioProcessingEvent) {
+                const outputBuffer = audioProcessingEvent.outputBuffer;
+                const outputData = outputBuffer.getChannelData(0);
+                
+                switch(type) {
+                    case 'white':
+                        for (let i = 0; i < bufferSize; i++) {
+                            outputData[i] = Math.random() * 2 - 1;
+                        }
+                        break;
+                        
+                    case 'pink':
+                        for (let i = 0; i < bufferSize; i++) {
+                            const white = Math.random() * 2 - 1;
+                            b0 = 0.99886 * b0 + white * 0.0555179;
+                            b1 = 0.99332 * b1 + white * 0.0750759;
+                            b2 = 0.96900 * b2 + white * 0.1538520;
+                            b3 = 0.86650 * b3 + white * 0.3104856;
+                            b4 = 0.55000 * b4 + white * 0.5329522;
+                            b5 = -0.7616 * b5 - white * 0.0168980;
+                            outputData[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+                            b6 = white * 0.115926;
+                        }
+                        break;
+                        
+                    case 'brown':
+                        for (let i = 0; i < bufferSize; i++) {
+                            const white = Math.random() * 2 - 1;
+                            outputData[i] = (lastOut + (0.02 * white)) / 1.02;
+                            lastOut = outputData[i];
+                            outputData[i] *= 3.5;
+                        }
+                        break;
+                }
+            };
+            
+            return scriptNode;
         }
 
         // Setup filter
@@ -225,6 +279,7 @@
                 case 'low':
                     filterNode.type = 'lowpass';
                     filterNode.frequency.value = 250;
+                    filterNode.Q.value = 0.7;
                     break;
                 case 'mid':
                     filterNode.type = 'bandpass';
@@ -234,10 +289,12 @@
                 case 'high':
                     filterNode.type = 'highpass';
                     filterNode.frequency.value = 2000;
+                    filterNode.Q.value = 0.7;
                     break;
                 default:
                     filterNode.type = 'lowpass';
                     filterNode.frequency.value = 20000;
+                    filterNode.Q.value = 0.7;
             }
         }
 
@@ -248,15 +305,27 @@
             if (noiseGainNode) {
                 noiseGainNode.gain.value = volume / 100;
             }
+            
+            // Feedback visual
+            noiseVolumeValue.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                noiseVolumeValue.style.transform = '';
+            }, 200);
         });
 
         // Reverb control
         reverbSlider.addEventListener('input', () => {
             const reverb = reverbSlider.value;
             reverbValue.textContent = `${reverb}%`;
+            
+            // Feedback visual
+            reverbValue.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                reverbValue.style.transform = '';
+            }, 200);
         });
 
-        // Start noise
+        // Start noise - Versión mejorada sin loop
         startNoiseBtn.addEventListener('click', () => {
             if (isNoisePlaying) return;
             
@@ -274,46 +343,44 @@
             const volume = noiseVolumeSlider.value / 100;
             const reverbAmount = reverbSlider.value / 100;
             
-            let buffer;
-            switch(noiseType) {
-                case 'white':
-                    buffer = generateWhiteNoise(noiseAudioContext);
-                    break;
-                case 'pink':
-                    buffer = generatePinkNoise(noiseAudioContext);
-                    break;
-                case 'brown':
-                    buffer = generateBrownNoise(noiseAudioContext);
-                    break;
-            }
-            
-            playNoise(buffer, frequencyRange, volume, reverbAmount);
+            playContinuousNoise(noiseType, frequencyRange, volume, reverbAmount);
         });
         
-        // Touch event para móvil
+        // Touch event optimizado
         startNoiseBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
+            e.stopPropagation();
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        startNoiseBtn.addEventListener('touchend', function(e) {
+            e.stopPropagation();
+            this.style.transform = '';
             this.click();
-        }, { passive: false });
+        });
 
         // Stop noise
         stopNoiseBtn.addEventListener('click', () => {
             stopNoise();
         });
         
-        // Touch event para móvil
+        // Touch event optimizado
         stopNoiseBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
+            e.stopPropagation();
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        stopNoiseBtn.addEventListener('touchend', function(e) {
+            e.stopPropagation();
+            this.style.transform = '';
             this.click();
-        }, { passive: false });
+        });
 
-        // Play noise function
-        function playNoise(buffer, frequencyRange, volume, reverbAmount) {
+        // Función para reproducir ruido continuo (sin loop)
+        function playContinuousNoise(type, frequencyRange, volume, reverbAmount) {
             stopNoise();
             
-            noiseSourceNode = noiseAudioContext.createBufferSource();
-            noiseSourceNode.buffer = buffer;
-            noiseSourceNode.loop = true;
+            // Crear nodo de script para ruido en tiempo real
+            const scriptNode = createNoiseStream(noiseAudioContext, type);
             
             noiseGainNode = noiseAudioContext.createGain();
             noiseGainNode.gain.value = volume;
@@ -321,27 +388,13 @@
             noiseFilterNode = noiseAudioContext.createBiquadFilter();
             setupFilter(noiseFilterNode, frequencyRange);
             
-            if (reverbAmount > 0) {
-                convolverNode = createReverb(noiseAudioContext);
-                const dryGain = noiseAudioContext.createGain();
-                const wetGain = noiseAudioContext.createGain();
-                
-                dryGain.gain.value = 1 - reverbAmount;
-                wetGain.gain.value = reverbAmount;
-                
-                noiseSourceNode.connect(noiseFilterNode);
-                noiseFilterNode.connect(dryGain);
-                noiseFilterNode.connect(convolverNode);
-                convolverNode.connect(wetGain);
-                dryGain.connect(noiseGainNode);
-                wetGain.connect(noiseGainNode);
-            } else {
-                noiseSourceNode.connect(noiseFilterNode);
-                noiseFilterNode.connect(noiseGainNode);
-            }
-            
+            // Conectar nodos
+            scriptNode.connect(noiseFilterNode);
+            noiseFilterNode.connect(noiseGainNode);
             noiseGainNode.connect(noiseAudioContext.destination);
-            noiseSourceNode.start();
+            
+            // Guardar referencia al scriptNode como source
+            noiseSourceNode = scriptNode;
             
             isNoisePlaying = true;
             startNoiseBtn.disabled = true;
@@ -350,14 +403,22 @@
 
         function stopNoise() {
             if (noiseSourceNode) {
-                try {
-                    noiseSourceNode.stop();
-                } catch(e) {
-                    console.log("Noise already stopped");
-                }
                 noiseSourceNode.disconnect();
                 noiseSourceNode = null;
             }
+            if (noiseGainNode) {
+                noiseGainNode.disconnect();
+                noiseGainNode = null;
+            }
+            if (noiseFilterNode) {
+                noiseFilterNode.disconnect();
+                noiseFilterNode = null;
+            }
+            if (convolverNode) {
+                convolverNode.disconnect();
+                convolverNode = null;
+            }
+            
             isNoisePlaying = false;
             startNoiseBtn.disabled = false;
             stopNoiseBtn.disabled = true;
@@ -392,9 +453,15 @@
     
     // Touch event para el botón de YouTube
     document.getElementById('loadPlaylistBtn').addEventListener('touchstart', function(e) {
-        e.preventDefault();
+        e.stopPropagation();
+        this.style.transform = 'scale(0.95)';
+    });
+    
+    document.getElementById('loadPlaylistBtn').addEventListener('touchend', function(e) {
+        e.stopPropagation();
+        this.style.transform = '';
         this.click();
-    }, { passive: false });
+    });
 
     //================ Binaural Beats Generator ========================
     document.addEventListener('DOMContentLoaded', function() {
@@ -418,6 +485,12 @@
             if (binauralGainNode) {
                 binauralGainNode.gain.value = binauralVolumeSlider.value;
             }
+            
+            // Feedback visual
+            binauralVolumeLevel.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                binauralVolumeLevel.style.transform = '';
+            }, 200);
         });
 
         // Start binaural beats
@@ -462,22 +535,34 @@
             stopBinauralBtn.disabled = false;
         });
         
-        // Touch event para móvil
+        // Touch event optimizado
         startBinauralBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
+            e.stopPropagation();
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        startBinauralBtn.addEventListener('touchend', function(e) {
+            e.stopPropagation();
+            this.style.transform = '';
             this.click();
-        }, { passive: false });
+        });
 
         // Stop binaural beats
         stopBinauralBtn.addEventListener('click', () => {
             stopBinauralBeats();
         });
         
-        // Touch event para móvil
+        // Touch event optimizado
         stopBinauralBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
+            e.stopPropagation();
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        stopBinauralBtn.addEventListener('touchend', function(e) {
+            e.stopPropagation();
+            this.style.transform = '';
             this.click();
-        }, { passive: false });
+        });
 
         function stopBinauralBeats() {
             if (oscillator1) {
@@ -497,10 +582,24 @@
     function toggleDarkMode() {
        var element = document.body;
        element.classList.toggle("dark-mode");
+       localStorage.setItem('darkMode', element.classList.contains('dark-mode'));
     }
+    
+    // Cargar preferencia de dark mode
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    });
     
     // Touch event para dark mode
     document.getElementById('darkModeBtn').addEventListener('touchstart', function(e) {
-        e.preventDefault();
+        e.stopPropagation();
+        this.style.transform = 'scale(0.95)';
+    });
+    
+    document.getElementById('darkModeBtn').addEventListener('touchend', function(e) {
+        e.stopPropagation();
+        this.style.transform = '';
         this.click();
-    }, { passive: false });
+    });

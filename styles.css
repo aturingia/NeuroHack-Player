@@ -1,4 +1,4 @@
- @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 * {
   box-sizing: border-box;
@@ -41,12 +41,23 @@ h3 {
   color: white;
 }
 
+.dark-mode .loop-player,
+.dark-mode .noise-gn,
+.dark-mode .bineural-bn {
+  background-color: #222;
+  border-color: #444;
+}
+
 .loop-player {
   margin-bottom: 20px;
   font-size: 16px;
   width: 361px;
   -webkit-user-select: none;
   user-select: none;
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 .noise {
@@ -60,6 +71,10 @@ h3 {
   width: 361px;
   -webkit-user-select: none;
   user-select: none;
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 .youtube {
@@ -92,6 +107,10 @@ h3 {
   width: 361px;
   -webkit-user-select: none;
   user-select: none;
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 .volume-bn {
@@ -144,57 +163,144 @@ input {
     width: 80%;
     padding-left: 0;
     margin-bottom: 10px;
-    touch-action: pan-y; /* Permite deslizar verticalmente pero no horizontalmente */
+    touch-action: manipulation; /* Mejor control táctil */
 }
 
+/* ESTILOS MEJORADOS PARA SLIDERS */
 input[type="range"] {
   -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   background: transparent;
   cursor: pointer;
-  touch-action: pan-y;
-  min-height: 40px; /* Mayor área táctil */
-  padding: 10px 0;
+  touch-action: none; /* Control total del slider */
+  min-height: 44px; /* Mayor área táctil para móvil */
+  padding: 15px 0;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 300px;
 }
 
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 24px;
-  width: 24px;
-  background-color: #007bff;
-  border-radius: 50%;
-  cursor: pointer;
-  margin-top: -8px;
-}
-
-input[type="range"]::-moz-range-thumb {
-  height: 24px;
-  width: 24px;
-  background-color: #007bff;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-}
-
+/* Track - para todos los navegadores */
 input[type="range"]::-webkit-slider-runnable-track {
-  height: 8px;
-  background: #ddd;
-  border-radius: 4px;
+  width: 100%;
+  height: 12px;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
 input[type="range"]::-moz-range-track {
-  height: 8px;
-  background: #ddd;
-  border-radius: 4px;
+  width: 100%;
+  height: 12px;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 12px;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+/* Thumb - para todos los navegadores */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 28px;
+  width: 28px;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid #007bff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  margin-top: -8px;
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 28px;
+  width: 28px;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid #007bff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-ms-thumb {
+  height: 28px;
+  width: 28px;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid #007bff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+/* Estados hover/active */
+input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+input[type="range"]:hover::-moz-range-thumb {
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+  background-color: #f0f0f0;
+}
+
+input[type="range"]:active::-moz-range-thumb {
+  transform: scale(1.15);
+  background-color: #f0f0f0;
+}
+
+/* Dark mode para sliders */
 body.dark-mode input[type="range"]::-webkit-slider-runnable-track {
-  background: #555;
+  background: linear-gradient(90deg, #4da3ff, #0066cc);
+  border-color: #666;
 }
 
 body.dark-mode input[type="range"]::-moz-range-track {
-  background: #555;
+  background: linear-gradient(90deg, #4da3ff, #0066cc);
+  border-color: #666;
+}
+
+body.dark-mode input[type="range"]::-webkit-slider-thumb {
+  background-color: #333;
+  border-color: #4da3ff;
+}
+
+body.dark-mode input[type="range"]::-moz-range-thumb {
+  background-color: #333;
+  border-color: #4da3ff;
+}
+
+/* Valor del slider */
+.volume-display {
+  display: inline-block;
+  min-width: 50px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+body.dark-mode .volume-display {
+  background: #444;
+  color: #fff;
 }
 
 input::file-selector-button {
@@ -204,34 +310,58 @@ input::file-selector-button {
   border: none;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 4px;
 }
 
 button {
     padding: 15px 25px; /* Botones más grandes para móvil */
-    background-color: #007bff;
+    background: linear-gradient(135deg, #007bff, #0056b3);
     color: #fff;
     border: none;
     cursor: pointer;
     border-radius: 8px; /* Bordes más redondeados */
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
     font-size: 16px;
+    font-weight: 500;
     min-height: 50px; /* Altura mínima para mejor táctil */
     -webkit-tap-highlight-color: rgba(0, 123, 255, 0.3);
     touch-action: manipulation;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
 }
 
 button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #0056b3, #004494);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
 }
 
 button:disabled {
-    background-color: #6c757d;
+    background: #6c757d;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+body.dark-mode button {
+    background: linear-gradient(135deg, #4da3ff, #0066cc);
+    box-shadow: 0 4px 6px rgba(77, 163, 255, 0.2);
+}
+
+body.dark-mode button:hover {
+    background: linear-gradient(135deg, #0066cc, #0052a3);
+    box-shadow: 0 6px 8px rgba(77, 163, 255, 0.3);
 }
 
 iframe {
   width: 370px;
   height: 208px; 
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 #player {
@@ -324,6 +454,7 @@ iframe {
   flex-direction: row;
   justify-content:center;
   align-items: center;
+  gap: 20px;
 }
 .footer {
   display: flex;
@@ -367,7 +498,7 @@ iframe {
 
 .grid-container {
   display: grid;
-  gap: 10px;
+  gap: 20px;
   grid-template:
     "header" 
     "youtube"
@@ -385,7 +516,7 @@ iframe {
 
 @media(min-width: 768px) {
   .grid-container{
-    gap: 10px;
+    gap: 20px;
     grid-template:
       "header header" 
       "youtube youtube"
@@ -412,13 +543,14 @@ iframe {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 20px;
   }
   
 }
 
 @media(min-width: 1200px) {
   .grid-container{
-    gap: 10px;
+    gap: 30px;
     grid-template:
       "header header" 
       "youtube youtube"
@@ -445,6 +577,7 @@ iframe {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 30px;
   }
 }
 
@@ -468,6 +601,7 @@ iframe {
       "bineural"
       "footer"  /
       minmax(300px, 100%);
+    gap: 15px;
   }
   
   .loop-player,
@@ -476,6 +610,7 @@ iframe {
     width: 100%;
     max-width: 100%;
     padding: 15px;
+    margin-bottom: 15px;
   }
   
   .insert-Area {
@@ -498,12 +633,14 @@ iframe {
   .nav-ns,
   .nav-bn {
     flex-wrap: wrap;
+    gap: 8px;
   }
   
   .noise-control-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
+    padding: 8px;
   }
   
   .noise-control-row label,
@@ -515,6 +652,11 @@ iframe {
   .frecuencias {
     flex-direction: column;
     gap: 10px;
+  }
+  
+  input[type="range"] {
+    max-width: 100%;
+    min-height: 50px;
   }
 }
 
@@ -529,11 +671,6 @@ input[type="range"]:active {
   cursor: grabbing;
 }
 
-button:active {
-  transform: scale(0.98);
-  transition: transform 0.1s;
-}
-
 /* Deshabilitar selección de texto en controles */
 .volumeLevel,
 #noiseVolumeValue,
@@ -541,4 +678,25 @@ button:active {
 #binauralVolumeLevel {
   -webkit-user-select: none;
   user-select: none;
+  font-weight: bold;
+}
+
+/* Contenedor de slider mejorado */
+.slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.slider-container label {
+  min-width: 80px;
+  text-align: right;
+}
+
+/* Animación suave para cambios */
+.volume-display, .volumeLevel, #noiseVolumeValue, #reverbValue, #binauralVolumeLevel {
+  transition: all 0.2s ease;
 }
