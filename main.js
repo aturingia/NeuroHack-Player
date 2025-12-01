@@ -1,4 +1,117 @@
-//================= MEJORAS PARA SLIDERS MULTIPLATAFORMA =========================
+// ================= DARK MODE SOLUCIONADO PARA ANDROID ======================
+    
+    // Detectar preferencia del sistema
+    function detectSystemTheme() {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    }
+    
+    // Función para aplicar el tema
+    function applyTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      const darkModeBtn = document.getElementById('darkModeBtn');
+      
+      if (theme === 'dark') {
+        darkModeBtn.textContent = '☀️ Light mode';
+      } else {
+        darkModeBtn.textContent = '🌙 Dark mode';
+      }
+      
+      // Guardar preferencia
+      localStorage.setItem('theme', theme);
+      
+      // Aplicar estilos forzadamente para Android
+      forceThemeApply(theme);
+    }
+    
+    // Función forzada para Android
+    function forceThemeApply(theme) {
+      // Aplicar clase directamente al body también (para compatibilidad)
+      if (theme === 'dark') {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+      
+      // Actualizar variables CSS forzadamente
+      const root = document.documentElement;
+      if (theme === 'dark') {
+        root.style.setProperty('--bg-color', '#121212');
+        root.style.setProperty('--text-color', '#ffffff');
+        root.style.setProperty('--card-bg', '#1e1e1e');
+        root.style.setProperty('--border-color', '#444');
+        root.style.setProperty('--button-bg', 'linear-gradient(135deg, #4da3ff, #0066cc)');
+        root.style.setProperty('--button-hover', 'linear-gradient(135deg, #0066cc, #0052a3)');
+        root.style.setProperty('--slider-track', 'linear-gradient(90deg, #4da3ff, #0066cc)');
+        root.style.setProperty('--slider-thumb', '#333');
+        root.style.setProperty('--slider-thumb-border', '#4da3ff');
+        root.style.setProperty('--input-bg', '#2d2d2d');
+        root.style.setProperty('--volume-display-bg', '#444');
+        root.style.setProperty('--shadow-color', 'rgba(77, 163, 255, 0.2)');
+      } else {
+        root.style.setProperty('--bg-color', 'white');
+        root.style.setProperty('--text-color', 'black');
+        root.style.setProperty('--card-bg', '#f5f5f5');
+        root.style.setProperty('--border-color', '#ddd');
+        root.style.setProperty('--button-bg', 'linear-gradient(135deg, #007bff, #0056b3)');
+        root.style.setProperty('--button-hover', 'linear-gradient(135deg, #0056b3, #004494)');
+        root.style.setProperty('--slider-track', 'linear-gradient(90deg, #007bff, #0056b3)');
+        root.style.setProperty('--slider-thumb', '#fff');
+        root.style.setProperty('--slider-thumb-border', '#007bff');
+        root.style.setProperty('--input-bg', '#fff');
+        root.style.setProperty('--volume-display-bg', '#f0f0f0');
+        root.style.setProperty('--shadow-color', 'rgba(0, 123, 255, 0.2)');
+      }
+    }
+    
+    // Función para alternar tema
+    function toggleDarkMode() {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    }
+    
+    // Inicializar tema al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+      // Cargar tema guardado o detectar del sistema
+      const savedTheme = localStorage.getItem('theme');
+      const systemTheme = detectSystemTheme();
+      const initialTheme = savedTheme || systemTheme;
+      
+      applyTheme(initialTheme);
+      
+      // Escuchar cambios en la preferencia del sistema
+      if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', (e) => {
+          // Solo cambiar si no hay preferencia guardada
+          if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      }
+      
+      // Botón de dark mode - eventos táctiles mejorados
+      const darkModeBtn = document.getElementById('darkModeBtn');
+      darkModeBtn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        this.style.transform = 'scale(0.95)';
+      }, { passive: false });
+      
+      darkModeBtn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        this.style.transform = '';
+        toggleDarkMode();
+      }, { passive: false });
+      
+      darkModeBtn.addEventListener('touchcancel', function() {
+        this.style.transform = '';
+      });
+    });
+    
+    // ================= MEJORAS PARA SLIDERS MULTIPLATAFORMA =========================
     document.addEventListener('DOMContentLoaded', function() {
       // Configuración mejorada para sliders en móvil
       const sliders = document.querySelectorAll('input[type="range"]');
@@ -73,7 +186,7 @@
       }, { passive: false });
     });
 
-    //================= Loop Players =========================
+    // ================= Loop Players =========================
     document.addEventListener('DOMContentLoaded', function () {
         const startButtons = document.querySelectorAll('.startButton');
         const stopButtons = document.querySelectorAll('.stopButton');
@@ -166,14 +279,13 @@
         });
     });
 
-    //================ Noise Generator Continuo (Sin Loop) =======================
+    // ================= Noise Generator Continuo (Sin Loop) =======================
     let noiseAudioContext = null;
     let noiseSourceNode = null;
     let noiseGainNode = null;
     let noiseFilterNode = null;
     let convolverNode = null;
     let isNoisePlaying = false;
-    let noiseBufferSize = 44100; // 1 segundo a 44.1kHz
 
     document.addEventListener('DOMContentLoaded', function() {
         const startNoiseBtn = document.getElementById('startNoiseBtn');
@@ -182,49 +294,6 @@
         const noiseVolumeValue = document.getElementById('noiseVolumeValue');
         const reverbSlider = document.getElementById('reverbSlider');
         const reverbValue = document.getElementById('reverbValue');
-
-        // Crear buffer de ruido más largo para sonido continuo
-        function generateContinuousNoise(audioContext, type) {
-            // Buffer más largo para sonido continuo (10 segundos)
-            const bufferSize = audioContext.sampleRate * 10; // 10 segundos
-            const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            switch(type) {
-                case 'white':
-                    for (let i = 0; i < bufferSize; i++) {
-                        data[i] = Math.random() * 2 - 1;
-                    }
-                    break;
-                    
-                case 'pink':
-                    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-                    for (let i = 0; i < bufferSize; i++) {
-                        const white = Math.random() * 2 - 1;
-                        b0 = 0.99886 * b0 + white * 0.0555179;
-                        b1 = 0.99332 * b1 + white * 0.0750759;
-                        b2 = 0.96900 * b2 + white * 0.1538520;
-                        b3 = 0.86650 * b3 + white * 0.3104856;
-                        b4 = 0.55000 * b4 + white * 0.5329522;
-                        b5 = -0.7616 * b5 - white * 0.0168980;
-                        data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
-                        b6 = white * 0.115926;
-                    }
-                    break;
-                    
-                case 'brown':
-                    let lastOut = 0.0;
-                    for (let i = 0; i < bufferSize; i++) {
-                        const white = Math.random() * 2 - 1;
-                        data[i] = (lastOut + (0.02 * white)) / 1.02;
-                        lastOut = data[i];
-                        data[i] *= 3.5;
-                    }
-                    break;
-            }
-            
-            return buffer;
-        }
 
         // Función para crear ruido en tiempo real (streaming)
         function createNoiseStream(audioContext, type) {
@@ -425,7 +494,7 @@
         }
     });
 
-    //================ YouTube Player =================
+    // ================= YouTube Player =================
     function loadPlaylist() {
         var playlistURL = document.getElementById('playlistURL').value;
         
@@ -463,7 +532,7 @@
         this.click();
     });
 
-    //================ Binaural Beats Generator ========================
+    // ================= Binaural Beats Generator ========================
     document.addEventListener('DOMContentLoaded', function() {
         const freq1Input = document.getElementById('freq1');
         const freq2Input = document.getElementById('freq2');
@@ -576,30 +645,4 @@
             startBinauralBtn.disabled = false;
             stopBinauralBtn.disabled = true;
         }
-    });
-
-    //================ Dark Mode ======================
-    function toggleDarkMode() {
-       var element = document.body;
-       element.classList.toggle("dark-mode");
-       localStorage.setItem('darkMode', element.classList.contains('dark-mode'));
-    }
-    
-    // Cargar preferencia de dark mode
-    document.addEventListener('DOMContentLoaded', function() {
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-        }
-    });
-    
-    // Touch event para dark mode
-    document.getElementById('darkModeBtn').addEventListener('touchstart', function(e) {
-        e.stopPropagation();
-        this.style.transform = 'scale(0.95)';
-    });
-    
-    document.getElementById('darkModeBtn').addEventListener('touchend', function(e) {
-        e.stopPropagation();
-        this.style.transform = '';
-        this.click();
     });

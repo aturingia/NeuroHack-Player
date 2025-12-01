@@ -1,5 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --card-bg: #f5f5f5;
+  --border-color: #ddd;
+  --button-bg: linear-gradient(135deg, #007bff, #0056b3);
+  --button-hover: linear-gradient(135deg, #0056b3, #004494);
+  --slider-track: linear-gradient(90deg, #007bff, #0056b3);
+  --slider-thumb: #fff;
+  --slider-thumb-border: #007bff;
+  --input-bg: #fff;
+  --volume-display-bg: #f0f0f0;
+  --shadow-color: rgba(0, 123, 255, 0.2);
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --card-bg: #1e1e1e;
+  --border-color: #444;
+  --button-bg: linear-gradient(135deg, #4da3ff, #0066cc);
+  --button-hover: linear-gradient(135deg, #0066cc, #0052a3);
+  --slider-track: linear-gradient(90deg, #4da3ff, #0066cc);
+  --slider-thumb: #333;
+  --slider-thumb-border: #4da3ff;
+  --input-bg: #2d2d2d;
+  --volume-display-bg: #444;
+  --shadow-color: rgba(77, 163, 255, 0.2);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -17,11 +47,12 @@ body {
   font-family: 'Roboto', sans-serif;
   text-align: center;
   padding: 25px;
-  background-color: white;
-  color: black;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   height: 100%;
   -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 h3 {
   font-size: 25px;
@@ -36,28 +67,17 @@ h3 {
   user-select: none;
 }
 
-.dark-mode {
-  background-color: black;
-  color: white;
-}
-
-.dark-mode .loop-player,
-.dark-mode .noise-gn,
-.dark-mode .bineural-bn {
-  background-color: #222;
-  border-color: #444;
-}
-
 .loop-player {
   margin-bottom: 20px;
   font-size: 16px;
   width: 361px;
   -webkit-user-select: none;
   user-select: none;
-  background: #f5f5f5;
+  background: var(--card-bg);
   padding: 15px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
 }
 
 .noise {
@@ -71,10 +91,11 @@ h3 {
   width: 361px;
   -webkit-user-select: none;
   user-select: none;
-  background: #f5f5f5;
+  background: var(--card-bg);
   padding: 20px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
 }
 
 .youtube {
@@ -84,20 +105,22 @@ h3 {
 }
 
 .insert-Area {
-  background-color: #fff;
-  border: 1px solid #444444;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
   width: 300px;
   height: 25px;
   text-align: left;
   padding: 5px;
-  font-size: 16px; /* Para evitar zoom en iOS */
+  font-size: 16px;
+  color: var(--text-color);
+  transition: all 0.3s ease;
 }
 .bineural {
   text-align:center;
 }
 .bn {
   width: 100px;
-  font-size: 16px; /* Para evitar zoom en iOS */
+  font-size: 16px;
 }
 
 .bineural-bn {
@@ -107,10 +130,11 @@ h3 {
   width: 361px;
   -webkit-user-select: none;
   user-select: none;
-  background: #f5f5f5;
+  background: var(--card-bg);
   padding: 20px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
 }
 
 .volume-bn {
@@ -120,6 +144,7 @@ h3 {
 .link-a {
   font-size: 14px;
   text-decoration: none;
+  color: var(--text-color);
 }
 
 .wave-type {
@@ -129,8 +154,11 @@ h3 {
 .wave-type select {
   padding: 5px 10px;
   border-radius: 4px;
-  border: 1px solid #444444;
-  font-size: 16px; /* Para evitar zoom en iOS */
+  border: 1px solid var(--border-color);
+  font-size: 16px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
 .noise-controls {
@@ -163,7 +191,7 @@ input {
     width: 80%;
     padding-left: 0;
     margin-bottom: 10px;
-    touch-action: manipulation; /* Mejor control táctil */
+    touch-action: manipulation;
 }
 
 /* ESTILOS MEJORADOS PARA SLIDERS */
@@ -173,49 +201,41 @@ input[type="range"] {
   appearance: none;
   background: transparent;
   cursor: pointer;
-  touch-action: none; /* Control total del slider */
-  min-height: 44px; /* Mayor área táctil para móvil */
+  touch-action: none;
+  min-height: 44px;
   padding: 15px 0;
   margin: 10px 0;
   width: 100%;
   max-width: 300px;
 }
 
-/* Track - para todos los navegadores */
+/* Track */
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 12px;
-  background: linear-gradient(90deg, #007bff, #0056b3);
+  background: var(--slider-track);
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
 }
 
 input[type="range"]::-moz-range-track {
   width: 100%;
   height: 12px;
-  background: linear-gradient(90deg, #007bff, #0056b3);
+  background: var(--slider-track);
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
 }
 
-input[type="range"]::-ms-track {
-  width: 100%;
-  height: 12px;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-
-/* Thumb - para todos los navegadores */
+/* Thumb */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   height: 28px;
   width: 28px;
-  background-color: #fff;
+  background-color: var(--slider-thumb);
   border-radius: 50%;
   cursor: pointer;
-  border: 3px solid #007bff;
+  border: 3px solid var(--slider-thumb-border);
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   margin-top: -8px;
   transition: all 0.2s ease;
@@ -224,21 +244,10 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   height: 28px;
   width: 28px;
-  background-color: #fff;
+  background-color: var(--slider-thumb);
   border-radius: 50%;
   cursor: pointer;
-  border: 3px solid #007bff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: all 0.2s ease;
-}
-
-input[type="range"]::-ms-thumb {
-  height: 28px;
-  width: 28px;
-  background-color: #fff;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 3px solid #007bff;
+  border: 3px solid var(--slider-thumb-border);
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   transition: all 0.2s ease;
 }
@@ -256,88 +265,54 @@ input[type="range"]:hover::-moz-range-thumb {
 
 input[type="range"]:active::-webkit-slider-thumb {
   transform: scale(1.15);
-  background-color: #f0f0f0;
+  background-color: var(--input-bg);
 }
 
 input[type="range"]:active::-moz-range-thumb {
   transform: scale(1.15);
-  background-color: #f0f0f0;
-}
-
-/* Dark mode para sliders */
-body.dark-mode input[type="range"]::-webkit-slider-runnable-track {
-  background: linear-gradient(90deg, #4da3ff, #0066cc);
-  border-color: #666;
-}
-
-body.dark-mode input[type="range"]::-moz-range-track {
-  background: linear-gradient(90deg, #4da3ff, #0066cc);
-  border-color: #666;
-}
-
-body.dark-mode input[type="range"]::-webkit-slider-thumb {
-  background-color: #333;
-  border-color: #4da3ff;
-}
-
-body.dark-mode input[type="range"]::-moz-range-thumb {
-  background-color: #333;
-  border-color: #4da3ff;
-}
-
-/* Valor del slider */
-.volume-display {
-  display: inline-block;
-  min-width: 50px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 14px;
-  background: #f0f0f0;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-left: 10px;
-}
-
-body.dark-mode .volume-display {
-  background: #444;
-  color: #fff;
+  background-color: var(--input-bg);
 }
 
 input::file-selector-button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background: var(--button-bg);
   color: #fff;
   border: none;
   cursor: pointer;
   font-size: 16px;
   border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+input::file-selector-button:hover {
+  background: var(--button-hover);
 }
 
 button {
-    padding: 15px 25px; /* Botones más grandes para móvil */
-    background: linear-gradient(135deg, #007bff, #0056b3);
+    padding: 15px 25px;
+    background: var(--button-bg);
     color: #fff;
     border: none;
     cursor: pointer;
-    border-radius: 8px; /* Bordes más redondeados */
+    border-radius: 8px;
     transition: all 0.3s ease;
     font-size: 16px;
     font-weight: 500;
-    min-height: 50px; /* Altura mínima para mejor táctil */
+    min-height: 50px;
     -webkit-tap-highlight-color: rgba(0, 123, 255, 0.3);
     touch-action: manipulation;
-    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+    box-shadow: 0 4px 6px var(--shadow-color);
 }
 
 button:hover {
-    background: linear-gradient(135deg, #0056b3, #004494);
+    background: var(--button-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 6px 8px var(--shadow-color);
 }
 
 button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+    box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 button:disabled {
@@ -347,21 +322,11 @@ button:disabled {
     box-shadow: none;
 }
 
-body.dark-mode button {
-    background: linear-gradient(135deg, #4da3ff, #0066cc);
-    box-shadow: 0 4px 6px rgba(77, 163, 255, 0.2);
-}
-
-body.dark-mode button:hover {
-    background: linear-gradient(135deg, #0066cc, #0052a3);
-    box-shadow: 0 6px 8px rgba(77, 163, 255, 0.3);
-}
-
 iframe {
   width: 370px;
   height: 208px; 
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
 }
 
 #player {
@@ -512,6 +477,35 @@ iframe {
   touch-action: pan-y;
 }
 
+/* Valor del slider */
+.volume-display {
+  display: inline-block;
+  min-width: 50px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  background: var(--volume-display-bg);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+/* Contenedor de slider mejorado */
+.slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.slider-container label {
+  min-width: 80px;
+  text-align: right;
+}
+
 /* RESPONSIVE */
 
 @media(min-width: 768px) {
@@ -626,7 +620,7 @@ iframe {
   
   button {
     padding: 12px 20px;
-    min-height: 44px; /* Tamaño mínimo recomendado para táctil */
+    min-height: 44px;
   }
   
   .nav-pl,
@@ -681,22 +675,25 @@ input[type="range"]:active {
   font-weight: bold;
 }
 
-/* Contenedor de slider mejorado */
-.slider-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin: 10px 0;
-  width: 100%;
-}
-
-.slider-container label {
-  min-width: 80px;
-  text-align: right;
-}
-
 /* Animación suave para cambios */
 .volume-display, .volumeLevel, #noiseVolumeValue, #reverbValue, #binauralVolumeLevel {
   transition: all 0.2s ease;
+}
+
+/* Detectar preferencia de sistema para dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --card-bg: #1e1e1e;
+    --border-color: #444;
+    --button-bg: linear-gradient(135deg, #4da3ff, #0066cc);
+    --button-hover: linear-gradient(135deg, #0066cc, #0052a3);
+    --slider-track: linear-gradient(90deg, #4da3ff, #0066cc);
+    --slider-thumb: #333;
+    --slider-thumb-border: #4da3ff;
+    --input-bg: #2d2d2d;
+    --volume-display-bg: #444;
+    --shadow-color: rgba(77, 163, 255, 0.2);
+  }
 }
