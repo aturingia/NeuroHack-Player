@@ -38,7 +38,7 @@
   margin: 0;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
-  outline: solid 1px rgb(49, 49, 49);
+  /*outline: solid 1px rgb(49, 49, 49);*/
 }
 
 html{
