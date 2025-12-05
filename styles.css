@@ -18,6 +18,7 @@
 [data-theme="dark"] {
   --bg-color: #121212;
   --text-color: #ffffff;
+  --text-color-insert: black;
   --card-bg: #1e1e1e;
   --border-color: #444;
   --button-bg: linear-gradient(135deg, #4da3ff, #0066cc);
@@ -26,6 +27,7 @@
   --slider-thumb: #333;
   --slider-thumb-border: #4da3ff;
   --input-bg: #2d2d2d;
+  --input-bg-insert: #fff;
   --volume-display-bg: #444;
   --shadow-color: rgba(77, 163, 255, 0.2);
 }
@@ -36,6 +38,7 @@
   margin: 0;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  outline: solid 1px rgb(49, 49, 49);
 }
 
 html{
@@ -104,16 +107,20 @@ h3 {
     text-align: center;
 }
 
+
 .insert-Area {
-  background-color: var(--input-bg);
+  background-color: var(--input-bg-insert);
   border: 1px solid var(--border-color);
   width: 300px;
   height: 25px;
   text-align: left;
   padding: 5px;
   font-size: 16px;
-  color: var(--text-color);
+  color: var(--text-color-insert);
   transition: all 0.3s ease;
+}
+.freq-bn {
+  width: 168px;
 }
 .bineural {
   text-align:center;
@@ -138,7 +145,7 @@ h3 {
 }
 
 .volume-bn {
-  width: 361px;
+  width: 329px;
 }
 
 .link-a {
@@ -399,6 +406,13 @@ iframe {
   gap: 10px;
 }
 
+.volume-bn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .bineural {
   display: flex;
   flex-direction: column;
@@ -411,7 +425,6 @@ iframe {
   flex-direction:column;
   justify-content: center;
   align-items: center;
-  
 }
 
 .frecuencias{
@@ -601,7 +614,7 @@ iframe {
   .loop-player,
   .noise-gn,
   .bineural-bn {
-    width: 100%;
+    width: 377;
     max-width: 100%;
     padding: 15px;
     margin-bottom: 15px;

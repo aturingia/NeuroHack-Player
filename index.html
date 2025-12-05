@@ -141,11 +141,11 @@
       <h3>Binaural Beats Generator</h3>
       <div class="bineural-bn">
         <div class="frecuencias">
-          <div>
+          <div class="freq-bn">
             <label for="freq1">Base (Hz):</label>
             <input type="number" id="freq1" class="insert-Area bn" value="200" inputmode="decimal" min="20" max="2000">
           </div>
-          <div>
+          <div class="freq-bn">
             <label for="freq2">Carrier (Hz):</label>
             <input type="number" id="freq2" class="insert-Area bn" value="210" inputmode="decimal" min="20" max="2000"><br>
           </div>
@@ -159,11 +159,12 @@
           </select>
         </div>
         <div class="volume-bn">
+          <label for="binauralVolumeSlider">Volume:</label>
+          <span id="binauralVolumeLevel" class="volume-display">50%</span>
           <div class="slider-container">
-            <label for="binauralVolumeSlider">Volume:</label>
-            <span id="binauralVolumeLevel" class="volume-display">50%</span>
+            <input type="range" id="binauralVolumeSlider" min="0" max="1" step="0.01" value="0.5">
           </div>
-          <input type="range" id="binauralVolumeSlider" min="0" max="1" step="0.01" value="0.5">
+          <!--<input type="range" id="binauralVolumeSlider" min="0" max="1" step="0.01" value="0.5">-->
         </div>  
     
         <div class="nav-bn">
